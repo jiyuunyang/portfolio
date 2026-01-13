@@ -7,13 +7,13 @@ export default function Navigation() {
 
   return (
     <div>
-      <nav className='py-10 items-center fixed top-0 h-full w-52 bg-gray-100 border-b-gray-300 border-b hidden pc:block'>
+      <nav className='py-10 items-center fixed top-0 h-full w-52 bg-gray-50 border-gray-300 border-r hidden pc:block'>
         <p className='p-5'>메뉴1</p>
         <p className='p-5'>메뉴1</p>
         <p className='p-5'>메뉴1</p>
         <p className='p-5'>메뉴1</p>
       </nav>
-      <nav className='flex items-center fixed top-0 w-full h-12 bg-gray-100 border-b-gray-300 border-b pc:hidden'>
+      <nav className='flex items-center fixed top-0 w-full h-12 bg-gray-50 border-gray-300 border-b pc:hidden'>
         <button
           className='h-8 w-8 m-2 flex justify-center items-center'
           onClick={() => setShowDrownDown(true)}
@@ -22,7 +22,7 @@ export default function Navigation() {
         </button>
       </nav>
       <div
-        className={`p-5 bg-gray-100 ${
+        className={`p-5 bg-gray-50 ${
           showDropDown ? 'absolute' : 'hidden'
         } w-full pc:hidden`}
       >
