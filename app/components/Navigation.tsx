@@ -30,6 +30,7 @@ export default function Navigation() {
   // TODO 1 : 프로젝트 이름 #summary 의 경우 불러오는 데이터에 따라 이름이 달라져야함
   // TODO 2 : 스크롤 이벤트시 해당 이름이 하이라이트 되어야함
   // TODO 3 : 스크롤시 좀 더 스무스하게
+  // TODO 4 : 네비게이션 드롭바 내려올 때 dim 처리
 
   return (
     <>
