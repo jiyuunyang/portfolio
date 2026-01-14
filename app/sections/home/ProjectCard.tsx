@@ -2,27 +2,27 @@
 
 import { useRouter } from 'next/navigation';
 
-type ProjectsCardProps = {
+type ProjectCardProps = {
   noBorderBottom?: boolean;
 };
 
-export default function ProjectsCard({
+export default function ProjectCard({
   noBorderBottom = false,
-}: ProjectsCardProps) {
+}: ProjectCardProps) {
   const router = useRouter();
 
   return (
     <article
-      className={`py-3 ${noBorderBottom ? '' : 'border-b border-gray-300'}`}
+      className={`py-3 cursor-pointer hover:bg-gray-50 transition ${
+        noBorderBottom ? '' : 'border-b border-gray-300'
+      }`}
       onClick={() => router.push('/projects/1')}
     >
-      <header className='flex items-end'>
+      <header className='flex items-end gap-2'>
         <h4 className='text-lg font-semibold'>먼키 테이블오더 앱</h4>
-        <div className='w-2' />
         <aside className='text-sm  text-gray-500'>👉 자세히 보기</aside>
       </header>
-      <div className='h-3' />
-      <p>
+      <p className='mt-3'>
         매장 내 태블릿 환경에서 주문과 결제를 안정적으로 처리하는 테이블오더 앱
         개발
       </p>

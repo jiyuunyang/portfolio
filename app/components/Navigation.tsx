@@ -1,42 +1,102 @@
 'use client';
+
 import { Menu, XIcon } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
+const HOME_PAGE: { name: string; id: string }[] = [
+  { name: 'About', id: '#about' },
+  { name: 'Skills', id: '#skills' },
+  { name: 'Projects', id: '#projects' },
+  { name: 'Experience', id: '#experience' },
+  { name: 'Contact', id: '#contact' },
+];
+const PROJECT_PAGE: { name: string; id: string }[] = [
+  { name: '메인으로', id: '/' },
+  { name: '프로젝트 이름', id: '#summary' },
+  { name: '- 프로젝트 개요', id: '#outline' },
+  { name: '- 담당 역할', id: '#role' },
+  { name: '- 주요 구현 내용', id: '#features' },
+  { name: '- 기술적 고민', id: '#technical-challenge' },
+  { name: '- 결과 및 성과', id: '#result' },
+  { name: '- 회고', id: '#retrospect' },
+];
+
 export default function Navigation() {
-  const [showDropDown, setShowDrownDown] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const pathname = usePathname();
+  const menuList = pathname.includes('projects') ? PROJECT_PAGE : HOME_PAGE;
+  // TODO 1 : 프로젝트 이름 #summary 의 경우 불러오는 데이터에 따라 이름이 달라져야함
+  // TODO 2 : 스크롤 이벤트시 해당 이름이 하이라이트 되어야함
+  // TODO 3 : 스크롤시 좀 더 스무스하게
 
   return (
-    <div>
-      <nav className='py-10 items-center fixed top-0 h-full w-52 bg-gray-50 border-gray-300 border-r hidden pc:block'>
-        <p className='p-5'>메뉴1</p>
-        <p className='p-5'>메뉴1</p>
-        <p className='p-5'>메뉴1</p>
-        <p className='p-5'>메뉴1</p>
+    <>
+      {/* PC SIDE NAV */}
+      <nav
+        className='
+        hidden pc:flex flex-col items-start
+        fixed top-0 h-full w-52 pt-6 px-3
+        bg-gray-50 border-r border-gray-300
+        z-20
+        text-lg
+      '
+      >
+        {menuList.map((item) => (
+          <Link key={item.id} href={item.id} className='p-3 hover:opacity-70'>
+            {item.name}
+          </Link>
+        ))}
       </nav>
-      <nav className='flex items-center fixed top-0 w-full h-12 bg-gray-50 border-gray-300 border-b pc:hidden'>
+
+      {/* MOBILE TOP BAR */}
+      <nav
+        className='
+        flex pc:hidden items-center
+        fixed top-0 w-full h-12
+        bg-gray-50 border-b border-gray-300
+        z-30
+      '
+      >
         <button
-          className='h-8 w-8 m-2 flex justify-center items-center'
-          onClick={() => setShowDrownDown(true)}
+          className='h-8 w-8 m-2 flex items-center justify-center cursor-pointer'
+          onClick={() => setIsDropdownOpen(true)}
         >
           <Menu size={24} strokeWidth={2.5} />
         </button>
       </nav>
+
+      {/* MOBILE DROPDOWN */}
       <div
-        className={`p-5 bg-gray-50 ${
-          showDropDown ? 'absolute' : 'hidden'
-        } w-full pc:hidden`}
+        className={`
+          fixed top-0 left-0 w-full
+          bg-gray-50 p-3
+          z-40 pc:hidden
+          text-lg
+          transition-transform duration-200
+          ${isDropdownOpen ? 'translate-y-0' : '-translate-y-full'}
+          ${isDropdownOpen ? 'pointer-events-auto' : 'pointer-events-none'}
+        `}
       >
         <button
-          className='h-8 w-8 mb-2 flex justify-center items-center'
-          onClick={() => setShowDrownDown(false)}
+          className='h-8 w-8 mb-4 flex items-center justify-center'
+          onClick={() => setIsDropdownOpen(false)}
         >
           <XIcon size={24} strokeWidth={2.5} />
         </button>
-        <p className='px-2 py-5'>메뉴1</p>
-        <p className='px-2 py-5'>메뉴1</p>
-        <p className='px-2 py-5'>메뉴1</p>
-        <p className='px-2 py-5'>메뉴1</p>
+
+        {menuList.map((item) => (
+          <Link
+            key={item.id}
+            href={item.id}
+            className='block px-2 py-4'
+            onClick={() => setIsDropdownOpen(false)}
+          >
+            {item.name}
+          </Link>
+        ))}
       </div>
-    </div>
+    </>
   );
 }

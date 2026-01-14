@@ -11,11 +11,10 @@ export default function ExperienceCard({
         noBorderBottom ? '' : 'border-b border-gray-300'
       }`}
     >
-      <header className='flex flex-row'>
+      <header className='flex flex-row gap-2'>
         <h3 className='text-gray-50 text-lg font-semibold'>
           먼슬리키친 | 프론트엔드
         </h3>
-        <div className='w-2' />
         <time dateTime='2023-08/2024-09' className='text-gray-50'>
           (2023.08 – 2024.09)
         </time>

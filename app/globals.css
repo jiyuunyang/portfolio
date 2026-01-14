@@ -30,3 +30,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
 }
+
+section {
+  @apply scroll-mt-12 pc:scroll-mt-0;
+}
