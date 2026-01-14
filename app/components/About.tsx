@@ -10,7 +10,7 @@ export default function About() {
         보수를 함께 고민합니다.
       </p>
       <div className='h-3' />
-      <p className='text-sm  text-gray-500'>👉 프로젝트 보러가기</p>
+      <aside className='text-sm  text-gray-500'>👉 프로젝트 보러가기</aside>
     </section>
   );
 }

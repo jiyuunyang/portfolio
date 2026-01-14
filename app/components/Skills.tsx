@@ -7,7 +7,7 @@ export default function Skills() {
         <li>Frontend: TypeScript, React, Next.js, Flutter, React Native </li>
         <li>Mobile / App: Dart, Flutter, Swift, SwiftUI </li>
         <li>
-          Styling & State: Emotion, Styled-components, Tailwind CSS, Zustand,
+          Styling & St ate: Emotion, Styled-components, Tailwind CSS, Zustand,
           Provider
         </li>
         <li>Infra & Tools: AWS(S3), Git, Jira, Notion, Figma</li>
