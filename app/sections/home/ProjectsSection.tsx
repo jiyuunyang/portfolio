@@ -10,7 +10,9 @@ const nonActivateStlye =
 export default function ProjectsSection() {
   const [isFocus, setIsFocus] = useState(0);
 
-  // TODO : 마지막줄 카드의 경우 border가 보이지 않도록
+  // TODO 1 : 마지막줄 카드의 경우 border가 보이지 않도록
+  // TODO 2 : 탭 클릭시 밑줄이 자연스럽게 나오도록
+
   return (
     <section
       id='projects'
