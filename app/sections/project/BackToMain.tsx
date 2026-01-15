@@ -1,5 +1,6 @@
 'use client';
 import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function BackToMain() {
@@ -11,7 +12,9 @@ export default function BackToMain() {
         onClick={() => router.back()}
       >
         <ArrowLeft size={24} />
-        <p className='text-xl font-bold'>메인으로</p>
+        <Link className='text-xl font-bold' href='/'>
+          메인으로
+        </Link>
       </button>
     </div>
   );

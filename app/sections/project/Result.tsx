@@ -1,4 +1,8 @@
-export default function Result() {
+type Props = {
+  id: string;
+};
+
+export default function Result({ id }: Props) {
   return (
     <section
       id='result'

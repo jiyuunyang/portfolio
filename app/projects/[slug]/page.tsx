@@ -11,16 +11,16 @@ export default function ProjectDetail() {
   return (
     <div>
       <div className='tb:grid tb:grid-cols-2'>
-        <Summary />
+        <Summary id='summary' />
         <div>
-          <Outline />
-          <Role />
+          <Outline id='outline' />
+          <Role id='role' />
         </div>
       </div>
-      <FeaturesSection />
-      <TechnicalChallenge />
-      <Result />
-      <Retrospect />
+      <FeaturesSection id='features' />
+      <TechnicalChallenge id='technical-challenge' />
+      <Result id='result' />
+      <Retrospect id='retrospect' />
       <BackToMain />
     </div>
   );

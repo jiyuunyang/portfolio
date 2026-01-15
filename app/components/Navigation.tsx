@@ -4,6 +4,7 @@ import { Menu, XIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { useScrollSpy } from '../hooks/useScrollSpy';
 
 const HOME_PAGE: { name: string; id: string }[] = [
   { name: 'About', id: '#about' },
@@ -27,6 +28,8 @@ export default function Navigation() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const pathname = usePathname();
   const menuList = pathname.includes('projects') ? PROJECT_PAGE : HOME_PAGE;
+  const ids = menuList.map((item) => item.id);
+  const activeSection = useScrollSpy(ids);
   // TODO 1 : 프로젝트 이름 #summary 의 경우 불러오는 데이터에 따라 이름이 달라져야함
   // TODO 2 : 스크롤 이벤트시 해당 이름이 하이라이트 되어야함
   // TODO 3 : 스크롤시 좀 더 스무스하게
@@ -44,11 +47,20 @@ export default function Navigation() {
         text-lg
       '
       >
-        {menuList.map((item) => (
-          <Link key={item.id} href={item.id} className='p-3 hover:opacity-70'>
-            {item.name}
-          </Link>
-        ))}
+        {menuList.map((item) => {
+          const isActive = activeSection == item.id;
+          return (
+            <Link
+              key={item.id}
+              href={item.id}
+              className={`p-3 hover:opacity-70 ${
+                isActive ? 'font-bold text-black' : 'text-gray-800'
+              }`}
+            >
+              {item.name}
+            </Link>
+          );
+        })}
       </nav>
 
       {/* MOBILE TOP BAR */}
@@ -87,16 +99,23 @@ export default function Navigation() {
           <XIcon size={24} strokeWidth={2.5} />
         </button>
 
-        {menuList.map((item) => (
-          <Link
-            key={item.id}
-            href={item.id}
-            className='block px-2 py-4'
-            onClick={() => setIsDropdownOpen(false)}
-          >
-            {item.name}
-          </Link>
-        ))}
+        {menuList.map((item) => {
+          const isActive = activeSection == item.id;
+          return (
+            <Link
+              key={item.id}
+              href={item.id}
+              className={`block px-2 py-4 ${
+                isActive ? 'font-bold text-black' : 'text-gray-800'
+              }`}
+              onClick={() => {
+                setIsDropdownOpen(false);
+              }}
+            >
+              {item.name}
+            </Link>
+          );
+        })}
       </div>
     </>
   );
