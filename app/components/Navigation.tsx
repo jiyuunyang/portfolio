@@ -71,7 +71,9 @@ export default function Navigation() {
       '
       >
         <button
-          className='h-8 w-8 m-2 flex items-center justify-center cursor-pointer'
+          className='h-8 w-8 m-2 
+          flex items-center justify-center 
+          cursor-pointer'
           onClick={() => setIsDropdownOpen(true)}
         >
           <Menu size={24} strokeWidth={2.5} />
@@ -83,7 +85,8 @@ export default function Navigation() {
         className={`
           fixed top-0 left-0 w-full
           bg-gray-50 p-3
-          z-40 pc:hidden
+          z-40 
+          pc:hidden
           text-lg
           transition-transform duration-200
           ${isDropdownOpen ? 'translate-y-0' : '-translate-y-full'}
@@ -115,6 +118,19 @@ export default function Navigation() {
           );
         })}
       </div>
+
+      {/* MOBILE DROPDOWN 시 DIM Box */}
+      {isDropdownOpen && (
+        <div
+          className='
+          fixed inset-0
+          bg-black/40      
+          z-30
+          pc:hidden
+          transition-opacity duration-200'
+          onClick={() => setIsDropdownOpen(false)}
+        />
+      )}
     </>
   );
 }
