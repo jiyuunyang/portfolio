@@ -13,7 +13,10 @@ export default function Contact({ id }: Props) {
   return (
     <section
       id={id}
-      className='px-7 pt-4 pb-8 tb:px-9 tb:pt-8 tb:pb-12 pc:px-13 pc:pt-9 pc:pb-14 bg-gray-950 flex flex-col gap-3'
+      className='px-7 pt-4 pb-8 
+      tb:px-9 tb:pt-8 tb:pb-12 
+      pc:px-13 pc:pt-9 pc:pb-14 
+      bg-gray-950 flex flex-col gap-3'
     >
       <h2 className='text-xl tb:text-2xl font-bold text-gray-50'>Contact</h2>
 

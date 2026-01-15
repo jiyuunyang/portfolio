@@ -1,6 +1,12 @@
 export default function Hero() {
   return (
-    <section className='mx-5 px-2 py-6 tb:px-4 tb:py-10 pc:px-8 pc:py-12 border-gray-950 border-b flex flex-col gap-3'>
+    <section
+      className='mx-5 px-2 py-6 
+    tb:px-4 tb:py-10 
+    pc:px-8 pc:py-12 b
+    order-gray-950 border-b 
+    flex flex-col gap-3'
+    >
       <h1 className='text-xl tb:text-2xl font-bold'>
         사람이 실제로 사용하는 환경을 고려해,
         <br /> 안정적인 서비스를 만드는 <br className='tb:hidden pc:hidden' />{' '}

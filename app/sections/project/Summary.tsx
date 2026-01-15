@@ -8,7 +8,11 @@ export default function Summary({ id }: Props) {
   return (
     <section
       id={id}
-      className='mx-5 px-2 py-6 tb:px-4 tb:py-10 pc:px-8 pc:py-12 border-gray-950 border-b flex flex-col gap-5'
+      className='mx-5 px-2 py-6 
+      tb:px-4 tb:py-10 
+      pc:px-8 pc:py-12 
+      border-gray-950 border-b 
+      flex flex-col gap-5'
     >
       <h1 className='text-2xl tb:text-3xl font-bold'>먼키 테이블오더 앱</h1>
       <Image

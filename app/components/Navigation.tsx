@@ -31,7 +31,6 @@ export default function Navigation() {
   const ids = menuList.map((item) => item.id);
   const activeSection = useScrollSpy(ids);
   // TODO 1 : 프로젝트 이름 #summary 의 경우 불러오는 데이터에 따라 이름이 달라져야함
-  // TODO 4 : 네비게이션 드롭바 내려올 때 dim 처리
 
   return (
     <>

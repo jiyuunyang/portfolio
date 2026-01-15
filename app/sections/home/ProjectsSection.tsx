@@ -4,8 +4,14 @@ import { useState } from 'react';
 import ProjectCard from './ProjectCard';
 
 const baseStyle = 'relative font-extrabold cursor-pointer';
-const underlineBase =
-  'after:absolute after:left-0 after:-bottom-1 after:h-[3px] after:w-full after:bg-black after:content-[""] after:transform after:scale-x-0 after:origin-center after:transition-transform after:duration-300 after:ease-out';
+const underlineBase = `after:absolute after:left-0 after:-bottom-1 
+  after:h-[3px] after:w-full 
+  after:bg-black 
+  after:content-[""] 
+  after:transform after:scale-x-0 
+  after:origin-center 
+  after:transition-transform 
+  after:duration-300 after:ease-out`;
 const activeStyle = 'after:scale-x-100';
 const inactiveStyle = 'text-gray-500 hover:after:scale-x-100';
 
