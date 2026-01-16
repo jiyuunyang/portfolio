@@ -1,8 +1,11 @@
+import { ProjectDetail } from '@/lib/services/projectService';
+
 type Props = {
   id: string;
+  data: ProjectDetail['roles'];
 };
 
-export default function Role({ id }: Props) {
+export default function Role({ id, data }: Props) {
   return (
     <section
       id={id}
@@ -14,9 +17,9 @@ export default function Role({ id }: Props) {
       <h2 className='text-xl tb:text-2xl font-bold'>담당 역할</h2>
       <div className='h-3' />
       <ul className='pl-5 list-disc'>
-        <li>테이블오더 기기 전용 앱 프론트엔드 개발</li>
-        <li>기기 관리 및 주문·결제 플로우 UX 구현</li>
-        <li>실매장 테스트를 기반으로 한 기능 개선 및 오류 대응</li>
+        {data.map((item, idx) => (
+          <li key={idx}>{item}</li>
+        ))}
       </ul>
     </section>
   );

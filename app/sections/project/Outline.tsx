@@ -1,8 +1,11 @@
+import { ProjectDetail } from '@/lib/services/projectService';
+
 type Props = {
   id: string;
+  data: ProjectDetail;
 };
 
-export default function Outline({ id }: Props) {
+export default function Outline({ id, data }: Props) {
   return (
     <section
       id={id}
@@ -14,20 +17,14 @@ export default function Outline({ id }: Props) {
       <h2 className='text-xl tb:text-2xl font-bold'>프로젝트 개요</h2>
       <div className='h-3' />
       <ul className='pl-5 list-disc'>
-        <li>기간: 2024.01 – 2024.09</li>
-        <li>소속: 먼슬리키친</li>
-        <li>역할: 프론트엔드 개발</li>
-        <li>플랫폼: Android (Table Order Device)</li>
-        <li>기술 스택: Dart, Flutter</li>
+        <li>기간: {data.period}</li>
+        <li>소속: {data.company}</li>
+        <li>역할: {data.mainRole}</li>
+        <li>플랫폼: {data.platform}</li>
+        <li>기술 스택: {data.stacks}</li>
       </ul>
       <div className='h-3' />
-      <p>
-        기존 테이블오더 서비스는 매장 환경(와이파이 불안정, 기기 관리, 다중 주문
-        상황)에서 다양한 오류 상황이 발생하고 있었고, 주문·결제 흐름이 끊기지
-        않도록 안정적인 UX 개선이 필요했습니다. 특히 매장 직원이 기기를 직접
-        관리해야 하는 상황이 많아, 기기 식별·관리 기능과 오류 대응 UX가 중요한
-        요구사항이었습니다.
-      </p>
+      <p>{data.context}</p>
     </section>
   );
 }

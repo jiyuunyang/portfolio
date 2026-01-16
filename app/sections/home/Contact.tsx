@@ -1,14 +1,16 @@
 'use client';
 import Image from 'next/image';
 import { Mail } from 'lucide-react';
+import { Profile } from '@/lib/services/profileService';
 
 type Props = {
   id: string;
+  data: Profile['contact'];
 };
 
-export default function Contact({ id }: Props) {
-  const email = 'jiyuunyang@gmail.com';
-  const github = 'https://github.com/jiyuunyang';
+export default function Contact({ id, data }: Props) {
+  const email = data.email;
+  const github = data.github;
 
   return (
     <section

@@ -1,9 +1,11 @@
+import { ProjectDetail } from '@/lib/services/projectService';
 import FeatureCard from './FeatureCard';
 type Props = {
   id: string;
+  data: ProjectDetail['features'];
 };
 
-export default function FeaturesSection({ id }: Props) {
+export default function FeaturesSection({ id, data }: Props) {
   return (
     <section
       id={id}
@@ -14,11 +16,9 @@ export default function FeaturesSection({ id }: Props) {
     >
       <h2 className='text-xl tb:text-2xl font-bold'>주요 구현 내용</h2>
       <div className='h-5' />
-      <FeatureCard />
-      <FeatureCard />
-      <FeatureCard />
-      <FeatureCard />
-      <FeatureCard />
+      {data.map((item, idx) => (
+        <FeatureCard key={idx} data={item} />
+      ))}
     </section>
   );
 }

@@ -1,10 +1,18 @@
+import { format } from 'date-fns';
+import { Experience } from '@/lib/services/experienceService';
+
 type ExperienceCardProps = {
   noBorderBottom?: boolean;
+  data: Experience;
 };
 
 export default function ExperienceCard({
   noBorderBottom = false,
+  data,
 }: ExperienceCardProps) {
+  const startDate = format(data.timeStart.toDate(), 'yyyy-MM');
+  const endDate = format(data.timeEnd.toDate(), 'yyy-MM');
+
   return (
     <article
       className={`py-6 max-w-5xl ${
@@ -13,17 +21,16 @@ export default function ExperienceCard({
     >
       <header className='flex flex-row gap-2'>
         <h3 className='text-gray-50 text-lg font-semibold'>
-          먼슬리키친 | 프론트엔드
+          {data.company} | {data.role}
         </h3>
-        <time dateTime='2023-08/2024-09' className='text-gray-50'>
-          (2023.08 – 2024.09)
+        <time dateTime={`${startDate}/${endDate}`} className='text-gray-50'>
+          {`(${startDate} - ${endDate})`}
         </time>
       </header>
       <ul className='pl-5 list-disc text-gray-50'>
-        <li>
-          테이블오더, 키오스크, 모바일 주문 앱 등 매장 환경 중심 서비스 개발
-        </li>
-        <li>주문·결제 플로우 개선 및 기기 제약 환경 대응 UX 구현s</li>
+        {data.tasks.map((item, idx) => (
+          <li key={idx}>{item}</li>
+        ))}
       </ul>
     </article>
   );

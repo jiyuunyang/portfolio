@@ -1,10 +1,12 @@
+import { Experience } from '@/lib/services/experienceService';
 import ExperienceCard from './ExperienceCard';
 
 type Props = {
   id: string;
+  data: Experience[];
 };
 
-export default function ExperienceSection({ id }: Props) {
+export default function ExperienceSection({ id, data }: Props) {
   return (
     <section
       id={id}
@@ -14,9 +16,13 @@ export default function ExperienceSection({ id }: Props) {
       bg-gray-800'
     >
       <h2 className='text-xl tb:text-2xl font-bold text-gray-50'>Experience</h2>
-      <ExperienceCard />
-      <ExperienceCard />
-      <ExperienceCard noBorderBottom />
+      {data.map((item, idx) => (
+        <ExperienceCard
+          key={item.id}
+          data={item}
+          noBorderBottom={idx === data.length - 1}
+        />
+      ))}
     </section>
   );
 }

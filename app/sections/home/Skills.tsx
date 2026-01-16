@@ -1,8 +1,11 @@
+import { Profile } from '@/lib/services/profileService';
+
 type Props = {
   id: string;
+  data: Profile['skills'];
 };
 
-export default function Skills({ id }: Props) {
+export default function Skills({ id, data }: Props) {
   return (
     <section
       id={id}
@@ -10,17 +13,11 @@ export default function Skills({ id }: Props) {
       tb:px-4 tb:pt-8 tb:pb-10 
       pc:px-8 pc:pt-9 pc:pb-12 
       border-gray-950 border-b 
-      flex-col gap-3'
+      flex flex-col gap-3'
     >
       <h2 className='text-xl tb:text-2xl font-bold'>Skills</h2>
       <ul className='pl-5 list-disc'>
-        <li>Frontend: TypeScript, React, Next.js, Flutter, React Native </li>
-        <li>Mobile / App: Dart, Flutter, Swift, SwiftUI </li>
-        <li>
-          Styling & St ate: Emotion, Styled-components, Tailwind CSS, Zustand,
-          Provider
-        </li>
-        <li>Infra & Tools: AWS(S3), Git, Jira, Notion, Figma</li>
+        {data && data.map((item, idx) => <li key={idx}>{item}</li>)}
       </ul>
     </section>
   );

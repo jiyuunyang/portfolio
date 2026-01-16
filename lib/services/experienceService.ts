@@ -1,11 +1,5 @@
-import {
-  collection,
-  getDocs,
-  orderBy,
-  query,
-  Timestamp,
-} from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { adminDb } from '@/lib/firebaseAdmin';
+import { Timestamp } from 'firebase-admin/firestore';
 
 export type Experience = {
   id: string; // 문서명
@@ -17,15 +11,16 @@ export type Experience = {
   order: number;
 };
 
-export async function getProjects(): Promise<Experience[]> {
-  const q = query(collection(db, 'experience'), orderBy('order', 'asc'));
-  const snapshot = await getDocs(q);
+export async function getExperience(): Promise<Experience[]> {
+  const snapshot = await adminDb
+    .collection('experience')
+    .orderBy('order', 'asc')
+    .get();
 
-  // 배열 형태로 변환
-  const projects: Experience[] = snapshot.docs.map((doc) => ({
+  const experiences: Experience[] = snapshot.docs.map((doc) => ({
     id: doc.id,
     ...(doc.data() as Omit<Experience, 'id'>),
   }));
 
-  return projects;
+  return experiences;
 }

@@ -1,8 +1,11 @@
+import { ProjectDetail } from '@/lib/services/projectService';
+
 type Props = {
   id: string;
+  data: ProjectDetail['technicalChallenge'];
 };
 
-export default function TechnicalChallenge({ id }: Props) {
+export default function TechnicalChallenge({ id, data }: Props) {
   return (
     <section
       id={id}
@@ -14,9 +17,9 @@ export default function TechnicalChallenge({ id }: Props) {
       <h2 className='text-xl tb:text-2xl font-bold'>기술적 고민</h2>
       <div className='h-3' />
       <ul>
-        <li>⚡ 안정성: 주문 상태 로컬 캐싱</li>
-        <li>📡 환경 대응: 네트워크 오류 UI 분기</li>
-        <li>🧭 UX: 실패 원인 명확화</li>
+        {data?.map((item, idx) => (
+          <li key={idx}>{item}</li>
+        ))}
       </ul>
     </section>
   );
