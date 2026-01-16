@@ -16,7 +16,7 @@ export default function ExperienceCard({
   return (
     <article
       className={`py-6 max-w-5xl ${
-        noBorderBottom ? '' : 'border-b border-gray-300'
+        noBorderBottom ? '' : 'border-b border-amber-100'
       }`}
     >
       <header className='flex flex-row gap-2'>

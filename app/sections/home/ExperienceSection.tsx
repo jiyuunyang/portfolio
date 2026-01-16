@@ -15,7 +15,9 @@ export default function ExperienceSection({ id, data }: Props) {
       pc:px-13 pc:pt-9 pc:pb-12 
       bg-gray-800'
     >
-      <h2 className='text-xl tb:text-2xl font-bold text-gray-50'>Experience</h2>
+      <h2 className='text-xl tb:text-2xl font-bold text-amber-100'>
+        Experience
+      </h2>
       {data.map((item, idx) => (
         <ExperienceCard
           key={item.id}

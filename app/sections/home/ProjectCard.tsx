@@ -16,7 +16,7 @@ export default function ProjectCard({
 
   return (
     <article
-      className={`py-3 cursor-pointer hover:bg-gray-50 transition ${
+      className={`py-3 cursor-pointer hover:bg-amber-50 transition ${
         noBorderBottom ? '' : 'border-b border-gray-300'
       }`}
       onClick={() => router.push(`/projects/${data.projectId}`)}
