@@ -20,6 +20,7 @@ export default function Summary({ id, data }: Props) {
       <h1 className='text-2xl tb:text-3xl font-bold'>{data.title}</h1>
       <Image
         src='/github-mark-white.svg'
+        // TODO : 실제 이미지 파일로 불러오기
         // src={data.summaryImage}
         alt='image_desc'
         width={400}
