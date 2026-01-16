@@ -20,8 +20,7 @@ const PROJECT_PAGE: { name: string; id: string }[] = [
   { name: '- 담당 역할', id: '#role' },
   { name: '- 주요 구현 내용', id: '#features' },
   { name: '- 기술적 고민', id: '#technical-challenge' },
-  { name: '- 결과 및 성과', id: '#result' },
-  { name: '- 회고', id: '#retrospect' },
+  { name: '- 성과 및 회고', id: '#result' },
 ];
 
 export default function Navigation() {
@@ -39,7 +38,9 @@ export default function Navigation() {
         className='
         hidden pc:flex flex-col items-start
         fixed top-0 h-full w-52 pt-6 px-3
+        dark:bg-gray-900
         bg-gray-50 border-r border-gray-300
+        dark:border-gray-700
         z-20
         text-lg
       '
@@ -51,7 +52,7 @@ export default function Navigation() {
               key={item.id}
               href={item.id}
               className={`p-3 hover:opacity-70 ${
-                isActive ? 'font-bold text-black' : 'text-gray-800'
+                isActive ? 'font-bold' : 'opacity-80'
               }`}
             >
               {item.name}
@@ -65,7 +66,10 @@ export default function Navigation() {
         className='
         flex pc:hidden items-center
         fixed top-0 w-full h-12
-        bg-gray-50 border-b border-gray-300
+        bg-gray-50 
+        dark:bg-gray-900
+        border-b border-gray-300
+        dark:border-gray-700
         z-30
       '
       >
@@ -84,6 +88,7 @@ export default function Navigation() {
         className={`
           fixed top-0 left-0 w-full
           bg-gray-50 p-3
+          dark:bg-gray-900
           z-40 
           pc:hidden
           text-lg
@@ -105,9 +110,7 @@ export default function Navigation() {
             <Link
               key={item.id}
               href={item.id}
-              className={`block px-2 py-4 ${
-                isActive ? 'font-bold text-black' : 'text-gray-800'
-              }`}
+              className={`block px-2 py-4 ${isActive ? 'font-bold' : ''}`}
               onClick={() => {
                 setIsDropdownOpen(false);
               }}

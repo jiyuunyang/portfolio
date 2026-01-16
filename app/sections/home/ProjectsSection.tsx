@@ -7,7 +7,8 @@ import { Project } from '@/lib/services/projectService';
 const baseStyle = 'relative font-extrabold cursor-pointer';
 const underlineBase = `after:absolute after:left-0 after:-bottom-1 
   after:h-[3px] after:w-full 
-  after:bg-black 
+  after:bg-black
+  dark:after:bg-gray-300
   after:content-[""] 
   after:transform after:scale-x-0 
   after:origin-center 
@@ -25,9 +26,6 @@ export default function ProjectsSection({ id, data }: Props) {
   const [isFocus, setIsFocus] = useState('work');
   const workProjectList = data.filter((item) => item.type === 'work');
   const personalProjectList = data.filter((item) => item.type === 'personal');
-  const dataLength = data && data.length;
-
-  // TODO 1 : 마지막줄 카드의 경우 border가 보이지 않도록
 
   return (
     <section
@@ -35,7 +33,7 @@ export default function ProjectsSection({ id, data }: Props) {
       className='mx-5 px-2 pt-4 pb-6 tb:px-4 tb:pt-8 tb:pb-10 pc:px-8 pc:pt-9 pc:pb-12'
     >
       <h2 className='text-xl tb:text-2xl font-bold'>Projects</h2>
-      <header className='flex flex-row gap-4 mt-5'>
+      <header className='flex flex-row gap-4 mt-5 mb-9'>
         <h3
           className={`${baseStyle} ${underlineBase} ${
             isFocus === 'work' ? activeStyle : inactiveStyle

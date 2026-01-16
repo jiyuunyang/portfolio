@@ -14,7 +14,7 @@ export default function Summary({ id, data }: Props) {
       className='mx-5 px-2 py-6 
       tb:px-4 tb:py-10 
       pc:px-8 pc:py-12 
-      border-gray-950 border-b 
+      border-b 
       flex flex-col justify-end gap-5'
     >
       <h1 className='text-2xl tb:text-3xl font-bold'>{data.title}</h1>

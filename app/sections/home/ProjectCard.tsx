@@ -16,9 +16,10 @@ export default function ProjectCard({
 
   return (
     <article
-      className={`py-3 cursor-pointer hover:bg-amber-50 transition ${
-        noBorderBottom ? '' : 'border-b border-gray-300'
-      }`}
+      className={`cursor-pointer pb-8
+        hover:bg-amber-50 transition
+        dark:hover:bg-gray-700 
+        ${noBorderBottom ? '' : 'border-b border-gray-300'}`}
       onClick={() => router.push(`/projects/${data.projectId}`)}
     >
       <header className='flex items-end gap-2'>
