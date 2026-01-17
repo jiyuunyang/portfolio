@@ -2,7 +2,7 @@ import { adminDb } from '@/lib/firebaseAdmin';
 
 export type Profile = {
   about: string;
-  contact: { email: string; github: string };
+  contact: { email: string; github: string; repo: string };
   skills: string[];
 };
 

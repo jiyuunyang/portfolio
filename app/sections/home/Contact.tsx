@@ -11,6 +11,7 @@ type Props = {
 export default function Contact({ id, data }: Props) {
   const email = data.email;
   const github = data.github;
+  const repo = data.repo;
 
   return (
     <section
@@ -49,6 +50,17 @@ export default function Contact({ id, data }: Props) {
               height={20}
             />
             <span>{github}</span>
+          </a>
+        </li>
+        <li className='flex flex-row'>
+          ✨{' '}
+          <a
+            href={repo}
+            target='_blank'
+            rel='noopener noreferrer'
+            className='flex items-center gap-2 underline hover:opacity-80'
+          >
+            포트폴리오 github
           </a>
         </li>
       </ul>
