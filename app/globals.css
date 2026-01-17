@@ -17,7 +17,7 @@
   --breakpoint-tb: 700px;
 }
 
-/*다크모드s*/
+/*다크모드*/
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -37,4 +37,24 @@ body {
 
 section {
   @apply scroll-mt-12 pc:scroll-mt-0;
+}
+
+/* 애니메이션 */
+@keyframes fill {
+  from {
+    background-size: 0% 60%;
+  }
+  to {
+    background-size: 100% 60%;
+  }
+}
+
+.marker {
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 0% 60%;
+  animation: fill 0.8s ease-out forwards;
+}
+.marker-delay {
+  animation-delay: 0.5s;
 }
