@@ -5,7 +5,7 @@ export type Project = {
   title: string;
   summaryDesc: string;
   cardFeatures: string[];
-  type: 'personal' | 'work';
+  type: 'primary' | 'personal' | 'work';
   order: number;
 };
 
@@ -50,7 +50,7 @@ export async function getProjects(): Promise<Project[]> {
 }
 
 export async function getProjectDetail(
-  projectId: string
+  projectId: string,
 ): Promise<ProjectDetail | null> {
   const docRef = adminDb.collection('projects').doc(projectId);
   const snap = await docRef.get();

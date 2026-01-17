@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import ProjectCard from './ProjectCard';
 import { Project } from '@/lib/services/projectService';
+import Link from 'next/link';
 
 const baseStyle = 'relative font-extrabold cursor-pointer';
 const underlineBase = `after:absolute after:left-0 after:-bottom-1 
@@ -23,7 +24,8 @@ type Props = {
 };
 
 export default function ProjectsSection({ id, data }: Props) {
-  const [isFocus, setIsFocus] = useState('work');
+  const [isFocus, setIsFocus] = useState('primary');
+  const primaryProjectList = data.filter((item) => item.type === 'primary');
   const workProjectList = data.filter((item) => item.type === 'work');
   const personalProjectList = data.filter((item) => item.type === 'personal');
 
@@ -34,6 +36,14 @@ export default function ProjectsSection({ id, data }: Props) {
     >
       <h2 className='text-xl tb:text-2xl font-bold'>Projects</h2>
       <header className='flex flex-row gap-4 mt-5 mb-9'>
+        <h3
+          className={`${baseStyle} ${underlineBase} ${
+            isFocus === 'primary' ? activeStyle : inactiveStyle
+          }`}
+          onClick={() => setIsFocus('primary')}
+        >
+          주요 프로젝트
+        </h3>
         <h3
           className={`${baseStyle} ${underlineBase} ${
             isFocus === 'work' ? activeStyle : inactiveStyle
@@ -52,13 +62,44 @@ export default function ProjectsSection({ id, data }: Props) {
         </h3>
       </header>
       <div className='grid tb:grid-cols-2 pc:grid-cols-3 gap-6 mt-3'>
-        {isFocus === 'work'
-          ? workProjectList.map((item) => (
-              <ProjectCard key={item.projectId} data={item} />
+        {isFocus === 'primary'
+          ? primaryProjectList.map((item) => (
+              <Link
+                href={`/projects/${item.projectId}`}
+                className='flex flex-col cursor-pointer
+                hover:bg-amber-50 transition
+                dark:hover:bg-gray-700'
+                key={item.projectId}
+              >
+                <ProjectCard key={item.projectId} data={item} />
+                <div className='mt-auto h-px bg-gray-300' />
+              </Link>
             ))
-          : personalProjectList.map((item) => (
-              <ProjectCard key={item.projectId} data={item} />
-            ))}
+          : isFocus === 'work'
+            ? workProjectList.map((item) => (
+                <Link
+                  href={`/projects/${item.projectId}`}
+                  className='flex flex-col cursor-pointer
+                hover:bg-amber-50 transition
+                dark:hover:bg-gray-700'
+                  key={item.projectId}
+                >
+                  <ProjectCard key={item.projectId} data={item} />
+                  <div className='mt-auto h-px bg-gray-300' />
+                </Link>
+              ))
+            : personalProjectList.map((item) => (
+                <Link
+                  href={`/projects/${item.projectId}`}
+                  className='flex flex-col cursor-pointer
+                hover:bg-amber-50 transition
+                dark:hover:bg-gray-700'
+                  key={item.projectId}
+                >
+                  <ProjectCard key={item.projectId} data={item} />
+                  <div className='mt-auto h-px bg-gray-300' />
+                </Link>
+              ))}
       </div>
     </section>
   );
