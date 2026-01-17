@@ -13,8 +13,6 @@ export default function Contact({ id, data }: Props) {
   const github = data.github;
   const repo = data.repo;
 
-  console.log(email, github, repo);
-
   return (
     <section
       id={id}

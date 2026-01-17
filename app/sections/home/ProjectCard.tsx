@@ -2,7 +2,6 @@
 
 import { Project } from '@/lib/services/projectService';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 type ProjectCardProps = {
   noBorderBottom?: boolean;
