@@ -19,6 +19,7 @@ export default function ProjectCard({ data }: ProjectCardProps) {
           <li key={idx}>{item}</li>
         ))}
       </ul>
+      <p className='mt-3 text-gray-500'>🛠️ {data.stacks}</p>
     </article>
   );
 }

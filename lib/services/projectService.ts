@@ -5,6 +5,7 @@ export type Project = {
   title: string;
   summaryDesc: string;
   cardFeatures: string[];
+  stacks: string;
   type: 'primary' | 'personal' | 'work';
   order: number;
 };
@@ -34,12 +35,14 @@ export async function getProjects(): Promise<Project[]> {
     .get();
 
   const projects: Project[] = snapshot.docs.map((doc) => {
-    const { title, summaryDesc, cardFeatures, type, order } = doc.data();
+    const { title, summaryDesc, stacks, cardFeatures, type, order } =
+      doc.data();
 
     return {
       projectId: doc.id,
       title,
       summaryDesc,
+      stacks,
       cardFeatures,
       type,
       order,
