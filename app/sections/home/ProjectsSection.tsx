@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo } from 'react';
 import ProjectCard from './ProjectCard';
 import { Project } from '@/lib/services/projectService';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const baseStyle = 'relative font-extrabold cursor-pointer';
 const underlineBase = `after:absolute after:left-0 after:-bottom-1 
@@ -23,11 +24,23 @@ type Props = {
   data: Project[];
 };
 
+type TabType = 'primary' | 'work' | 'personal';
+
 export default function ProjectsSection({ id, data }: Props) {
-  const [isFocus, setIsFocus] = useState('primary');
-  const primaryProjectList = data.filter((item) => item.type === 'primary');
-  const workProjectList = data.filter((item) => item.type === 'work');
-  const personalProjectList = data.filter((item) => item.type === 'personal');
+  const router = useRouter();
+  const selectedTab = (useSearchParams().get('tab') as TabType) ?? 'primary';
+  const setSelectedTab = (tab: TabType) => {
+    router.push(`/?tab=${tab}`, { scroll: false });
+  };
+  const projectListByTab = useMemo<Record<TabType, Project[]>>(() => {
+    return {
+      primary: data.filter((item) => item.type === 'primary'),
+      work: data.filter((item) => item.type === 'work'),
+      personal: data.filter((item) => item.type === 'personal'),
+    };
+  }, [data]);
+
+  const currentProjectList = projectListByTab[selectedTab];
 
   return (
     <section
@@ -38,68 +51,42 @@ export default function ProjectsSection({ id, data }: Props) {
       <header className='flex flex-row gap-4 mt-5 mb-9'>
         <h3
           className={`${baseStyle} ${underlineBase} ${
-            isFocus === 'primary' ? activeStyle : inactiveStyle
+            selectedTab === 'primary' ? activeStyle : inactiveStyle
           }`}
-          onClick={() => setIsFocus('primary')}
+          onClick={() => setSelectedTab('primary')}
         >
           주요 프로젝트
         </h3>
         <h3
           className={`${baseStyle} ${underlineBase} ${
-            isFocus === 'work' ? activeStyle : inactiveStyle
+            selectedTab === 'work' ? activeStyle : inactiveStyle
           }`}
-          onClick={() => setIsFocus('work')}
+          onClick={() => setSelectedTab('work')}
         >
           실무 프로젝트
         </h3>
         <h3
           className={`${baseStyle} ${underlineBase} ${
-            isFocus === 'personal' ? activeStyle : inactiveStyle
+            selectedTab === 'personal' ? activeStyle : inactiveStyle
           }`}
-          onClick={() => setIsFocus('personal')}
+          onClick={() => setSelectedTab('personal')}
         >
           개인 프로젝트
         </h3>
       </header>
       <div className='grid tb:grid-cols-2 pc:grid-cols-3 gap-6 mt-3'>
-        {isFocus === 'primary'
-          ? primaryProjectList.map((item) => (
-              <Link
-                href={`/projects/${item.projectId}`}
-                className='flex flex-col cursor-pointer
-                hover:bg-amber-50 transition
-                dark:hover:bg-gray-700'
-                key={item.projectId}
-              >
-                <ProjectCard key={item.projectId} data={item} />
-                <div className='mt-auto h-px bg-gray-300' />
-              </Link>
-            ))
-          : isFocus === 'work'
-            ? workProjectList.map((item) => (
-                <Link
-                  href={`/projects/${item.projectId}`}
-                  className='flex flex-col cursor-pointer
-                hover:bg-amber-50 transition
-                dark:hover:bg-gray-700'
-                  key={item.projectId}
-                >
-                  <ProjectCard key={item.projectId} data={item} />
-                  <div className='mt-auto h-px bg-gray-300' />
-                </Link>
-              ))
-            : personalProjectList.map((item) => (
-                <Link
-                  href={`/projects/${item.projectId}`}
-                  className='flex flex-col cursor-pointer
-                hover:bg-amber-50 transition
-                dark:hover:bg-gray-700'
-                  key={item.projectId}
-                >
-                  <ProjectCard key={item.projectId} data={item} />
-                  <div className='mt-auto h-px bg-gray-300' />
-                </Link>
-              ))}
+        {currentProjectList.map((item) => (
+          <Link
+            key={item.projectId}
+            href={`/projects/${item.projectId}?tab=${selectedTab}`}
+            className='flex flex-col cursor-pointer
+          hover:bg-amber-50 transition
+          dark:hover:bg-gray-700'
+          >
+            <ProjectCard data={item} />
+            <div className='mt-auto h-px bg-gray-300' />
+          </Link>
+        ))}
       </div>
     </section>
   );

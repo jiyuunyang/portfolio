@@ -1,35 +1,35 @@
 'use client';
 
 import { Menu, XIcon } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 
-const HOME_PAGE: { name: string; id: string }[] = [
-  { name: 'About', id: '#about' },
-  { name: 'Skills', id: '#skills' },
-  { name: 'Projects', id: '#projects' },
-  { name: 'Experience', id: '#experience' },
-  { name: 'Contact', id: '#contact' },
+const HOME_PAGE: { name: string; id: string; type: 'scroll' | 'router' }[] = [
+  { name: 'About', id: '#about', type: 'scroll' },
+  { name: 'Skills', id: '#skills', type: 'scroll' },
+  { name: 'Projects', id: '#projects', type: 'scroll' },
+  { name: 'Experience', id: '#experience', type: 'scroll' },
+  { name: 'Contact', id: '#contact', type: 'scroll' },
 ];
-const PROJECT_PAGE: { name: string; id: string }[] = [
-  { name: '메인으로', id: '/' },
-  { name: '프로젝트명', id: '#summary' },
-  { name: '- 프로젝트 개요', id: '#outline' },
-  { name: '- 담당 역할', id: '#role' },
-  { name: '- 주요 구현 내용', id: '#features' },
-  { name: '- 기술적 고민', id: '#technical-challenge' },
-  { name: '- 성과 및 회고', id: '#result' },
-];
+const PROJECT_PAGE: { name: string; id: string; type: 'scroll' | 'router' }[] =
+  [
+    { name: '메인으로', id: `/`, type: 'router' },
+    { name: '프로젝트명', id: '#summary', type: 'scroll' },
+    { name: '- 프로젝트 개요', id: '#outline', type: 'scroll' },
+    { name: '- 담당 역할', id: '#role', type: 'scroll' },
+    { name: '- 주요 구현 내용', id: '#features', type: 'scroll' },
+    { name: '- 기술적 고민', id: '#technical-challenge', type: 'scroll' },
+    { name: '- 성과 및 회고', id: '#result', type: 'scroll' },
+  ];
 
 export default function Navigation() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const router = useRouter();
   const pathname = usePathname();
   const menuList = pathname.includes('projects') ? PROJECT_PAGE : HOME_PAGE;
   const ids = menuList.map((item) => item.id);
   const activeSection = useScrollSpy(ids);
-  // TODO 1 : 프로젝트 이름 #summary 의 경우 불러오는 데이터에 따라 이름이 달라져야함
 
   return (
     <>
@@ -48,15 +48,17 @@ export default function Navigation() {
         {menuList.map((item) => {
           const isActive = activeSection == item.id;
           return (
-            <Link
+            <button
               key={item.id}
-              href={item.id}
+              onClick={() =>
+                item.type === 'router' ? router.back() : router.push(item.id)
+              }
               className={`p-3 hover:opacity-70 ${
                 isActive ? 'font-bold' : 'opacity-80'
               }`}
             >
               {item.name}
-            </Link>
+            </button>
           );
         })}
       </nav>
@@ -107,16 +109,20 @@ export default function Navigation() {
         {menuList.map((item) => {
           const isActive = activeSection == item.id;
           return (
-            <Link
+            <button
               key={item.id}
-              href={item.id}
-              className={`block px-2 py-4 ${isActive ? 'font-bold' : ''}`}
               onClick={() => {
+                if (item.type === 'router') {
+                  router.back();
+                } else {
+                  router.push(item.id);
+                }
                 setIsDropdownOpen(false);
               }}
+              className={`block px-2 py-4 ${isActive ? 'font-bold' : ''}`}
             >
               {item.name}
-            </Link>
+            </button>
           );
         })}
       </div>
