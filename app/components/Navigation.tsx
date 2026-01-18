@@ -1,8 +1,8 @@
 'use client';
 
 import { Menu, XIcon } from 'lucide-react';
-import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 
 const HOME_PAGE: { name: string; id: string; type: 'scroll' | 'router' }[] = [
@@ -30,6 +30,31 @@ export default function Navigation() {
   const menuList = pathname.includes('projects') ? PROJECT_PAGE : HOME_PAGE;
   const ids = menuList.map((item) => item.id);
   const activeSection = useScrollSpy(ids);
+  const searchParams = useSearchParams();
+  const tab = searchParams.get('tab') ?? 'primary';
+
+  // 스크롤 저장
+  useEffect(() => {
+    const saveScroll = () => {
+      // 홈이 아니면 저장 안 함
+      if (pathname !== '/') return;
+
+      sessionStorage.setItem('homeScrollY', String(window.scrollY));
+    };
+
+    window.addEventListener('scroll', saveScroll);
+    return () => window.removeEventListener('scroll', saveScroll);
+  }, [pathname]);
+
+  // 스크롤 복원
+  useEffect(() => {
+    if (pathname !== '/') return;
+
+    const y = sessionStorage.getItem('homeScrollY');
+    if (y) {
+      window.scrollTo(0, Number(y));
+    }
+  }, [pathname]);
 
   return (
     <>
@@ -50,9 +75,13 @@ export default function Navigation() {
           return (
             <button
               key={item.id}
-              onClick={() =>
-                item.type === 'router' ? router.back() : router.push(item.id)
-              }
+              onClick={() => {
+                if (item.type === 'router') {
+                  router.replace(`/?tab=${tab}`, { scroll: false });
+                } else {
+                  router.push(item.id);
+                }
+              }}
               className={`p-3 hover:opacity-70 ${
                 isActive ? 'font-bold' : 'opacity-80'
               }`}
@@ -113,7 +142,7 @@ export default function Navigation() {
               key={item.id}
               onClick={() => {
                 if (item.type === 'router') {
-                  router.back();
+                  router.replace(`/?tab=${tab}`, { scroll: false });
                 } else {
                   router.push(item.id);
                 }
