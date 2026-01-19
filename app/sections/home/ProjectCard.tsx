@@ -1,6 +1,6 @@
 'use client';
 
-import { Project } from '@/lib/services/projectService';
+import { Project } from '@/lib/services/projectServerService';
 
 type ProjectCardProps = {
   data: Project;

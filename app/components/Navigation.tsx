@@ -2,8 +2,9 @@
 
 import { Menu, XIcon } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useScrollSpy } from '../hooks/useScrollSpy';
+import { useProjectsData } from '@/context/ProjectsDataContext';
 
 const HOME_PAGE: { name: string; id: string }[] = [
   { name: 'About', id: '#about' },
@@ -26,9 +27,39 @@ export default function Navigation() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const menuList = pathname.includes('projects') ? PROJECT_PAGE : HOME_PAGE;
-  const ids = menuList.map((item) => item.id);
-  const activeSection = useScrollSpy(ids);
+  const { projects } = useProjectsData();
+  const menuList = useMemo(() => {
+    if (!projects || projects.length === 0) return null;
+
+    if (projects && pathname.includes('projects')) {
+      const selectedProject = projects.find(
+        (p) => `/projects/${p.projectId}` === pathname,
+      );
+
+      return PROJECT_PAGE.map((item) => {
+        if (item.name === '프로젝트명' && selectedProject) {
+          return { ...item, name: selectedProject.title };
+        }
+        return item;
+      }).filter((item) => {
+        // primary가 아닌 경우 #technical-challenge 메뉴 제외
+        if (
+          selectedProject &&
+          selectedProject.type !== 'primary' &&
+          item.id === '#technical-challenge'
+        ) {
+          return false;
+        }
+        return true;
+      });
+    } else {
+      return HOME_PAGE;
+    }
+  }, [pathname, projects]);
+
+  // 스크롤 관련
+  const ids = menuList?.map((item) => item.id);
+  const activeSection = useScrollSpy(ids || []);
 
   // 스크롤 저장
   useEffect(() => {
@@ -67,22 +98,23 @@ export default function Navigation() {
         text-lg
       '
       >
-        {menuList.map((item) => {
-          const isActive = activeSection == item.id;
-          return (
-            <button
-              key={item.id}
-              onClick={() => {
-                router.push(item.id);
-              }}
-              className={`p-3 hover:opacity-70 ${
-                isActive ? 'font-bold' : 'opacity-80'
-              }`}
-            >
-              {item.name}
-            </button>
-          );
-        })}
+        {menuList &&
+          menuList.map((item) => {
+            const isActive = activeSection == item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => {
+                  router.push(item.id);
+                }}
+                className={`p-3 hover:opacity-70 ${
+                  isActive ? 'font-bold' : 'opacity-80'
+                }`}
+              >
+                {item.name}
+              </button>
+            );
+          })}
       </nav>
 
       {/* MOBILE TOP BAR */}
@@ -128,21 +160,22 @@ export default function Navigation() {
           <XIcon size={24} strokeWidth={2.5} />
         </button>
 
-        {menuList.map((item) => {
-          const isActive = activeSection == item.id;
-          return (
-            <button
-              key={item.id}
-              onClick={() => {
-                router.push(item.id);
-                setIsDropdownOpen(false);
-              }}
-              className={`block px-2 py-4 ${isActive ? 'font-bold' : ''}`}
-            >
-              {item.name}
-            </button>
-          );
-        })}
+        {menuList &&
+          menuList.map((item) => {
+            const isActive = activeSection == item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => {
+                  router.push(item.id);
+                  setIsDropdownOpen(false);
+                }}
+                className={`block px-2 py-4 ${isActive ? 'font-bold' : ''}`}
+              >
+                {item.name}
+              </button>
+            );
+          })}
       </div>
 
       {/* MOBILE DROPDOWN 시 DIM Box */}

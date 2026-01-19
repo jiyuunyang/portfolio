@@ -2,8 +2,9 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import ProjectCard from './ProjectCard';
-import { Project } from '@/lib/services/projectService';
 import Link from 'next/link';
+import { useProjectsData } from '@/context/ProjectsDataContext';
+import { Project } from '@/lib/services/projectService';
 
 const baseStyle = 'relative font-extrabold cursor-pointer';
 const underlineBase = `after:absolute after:left-0 after:-bottom-1 
@@ -20,13 +21,13 @@ const inactiveStyle = 'text-gray-500 hover:after:scale-x-100';
 
 type Props = {
   id: string;
-  data: Project[];
 };
 
 type TabType = 'primary' | 'work' | 'personal';
 
-export default function ProjectsSection({ id, data }: Props) {
+export default function ProjectsSection({ id }: Props) {
   const [selectedTab, setSelectedTab] = useState<TabType>('primary');
+  const { projects: data } = useProjectsData();
 
   useEffect(() => {
     const saved = sessionStorage.getItem('lastProjectTab');

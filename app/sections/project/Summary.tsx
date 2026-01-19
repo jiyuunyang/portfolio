@@ -1,4 +1,4 @@
-import { ProjectDetail } from '@/lib/services/projectService';
+import { ProjectDetail } from '@/lib/services/projectServerService';
 import Image from 'next/image';
 import Link from 'next/link';
 

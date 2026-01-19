@@ -3,6 +3,8 @@ import { Noto_Sans, Noto_Sans_KR } from 'next/font/google';
 import './globals.css';
 import Navigation from './components/Navigation';
 import MainLayout from './components/MainLayout';
+import { ProjectsDataProvider } from '@/context/ProjectsDataContext';
+import { getProjects } from '@/lib/services/projectService';
 
 const notoSans = Noto_Sans({
   subsets: ['latin', 'latin-ext'],
@@ -19,18 +21,21 @@ export const metadata: Metadata = {
   description: '개발자로서의 비전, 기술 스택, 프로젝트 및 이력이 담겼습니다.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const projects = await getProjects();
   return (
     <html lang='en'>
       <body
         className={`${notoSansKr.variable} ${notoSans.variable} antialiased`}
       >
-        <Navigation />
-        <MainLayout>{children}</MainLayout>
+        <ProjectsDataProvider initialData={projects}>
+          <Navigation />
+          <MainLayout>{children}</MainLayout>
+        </ProjectsDataProvider>
       </body>
     </html>
   );

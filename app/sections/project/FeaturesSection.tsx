@@ -1,4 +1,4 @@
-import { ProjectDetail } from '@/lib/services/projectService';
+import { ProjectDetail } from '@/lib/services/projectServerService';
 import FeatureCard from './FeatureCard';
 type Props = {
   id: string;
