@@ -13,7 +13,7 @@ const HOME_PAGE: { name: string; id: string }[] = [
   { name: 'Contact', id: '#contact' },
 ];
 const PROJECT_PAGE: { name: string; id: string }[] = [
-  { name: '메인으로', id: `/` },
+  { name: '메인으로', id: '/' },
   { name: '프로젝트명', id: '#summary' },
   { name: '- 프로젝트 개요', id: '#outline' },
   { name: '- 담당 역할', id: '#role' },

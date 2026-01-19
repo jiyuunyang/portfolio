@@ -26,10 +26,7 @@ type Props = {
 type TabType = 'primary' | 'work' | 'personal';
 
 export default function ProjectsSection({ id, data }: Props) {
-  const [selectedTab, setSelectedTab] = useState<TabType>(() => {
-    if (typeof window === 'undefined') return 'primary';
-    return (sessionStorage.getItem('lastProjectTab') as TabType) ?? 'primary';
-  });
+  const [selectedTab, setSelectedTab] = useState<TabType>('primary');
 
   useEffect(() => {
     const saved = sessionStorage.getItem('lastProjectTab');
