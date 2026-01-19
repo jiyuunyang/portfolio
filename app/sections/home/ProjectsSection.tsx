@@ -1,10 +1,9 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import ProjectCard from './ProjectCard';
 import { Project } from '@/lib/services/projectService';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
 
 const baseStyle = 'relative font-extrabold cursor-pointer';
 const underlineBase = `after:absolute after:left-0 after:-bottom-1 
@@ -27,11 +26,25 @@ type Props = {
 type TabType = 'primary' | 'work' | 'personal';
 
 export default function ProjectsSection({ id, data }: Props) {
-  const router = useRouter();
-  const selectedTab = (useSearchParams().get('tab') as TabType) ?? 'primary';
-  const setSelectedTab = (tab: TabType) => {
-    router.push(`/?tab=${tab}`, { scroll: false });
+  const [selectedTab, setSelectedTab] = useState<TabType>(() => {
+    if (typeof window === 'undefined') return 'primary';
+    return (sessionStorage.getItem('lastProjectTab') as TabType) ?? 'primary';
+  });
+
+  useEffect(() => {
+    const saved = sessionStorage.getItem('lastProjectTab');
+    if (saved) {
+      setTimeout(() => {
+        setSelectedTab((saved as TabType) || 'primary');
+      }, 0);
+    }
+  }, []);
+
+  const changeTab = (tab: TabType) => {
+    setSelectedTab(tab);
+    sessionStorage.setItem('lastProjectTab', tab);
   };
+
   const projectListByTab = useMemo<Record<TabType, Project[]>>(() => {
     return {
       primary: data.filter((item) => item.type === 'primary'),
@@ -53,7 +66,7 @@ export default function ProjectsSection({ id, data }: Props) {
           className={`${baseStyle} ${underlineBase} ${
             selectedTab === 'primary' ? activeStyle : inactiveStyle
           }`}
-          onClick={() => setSelectedTab('primary')}
+          onClick={() => changeTab('primary')}
         >
           주요 프로젝트
         </h3>
@@ -61,7 +74,7 @@ export default function ProjectsSection({ id, data }: Props) {
           className={`${baseStyle} ${underlineBase} ${
             selectedTab === 'work' ? activeStyle : inactiveStyle
           }`}
-          onClick={() => setSelectedTab('work')}
+          onClick={() => changeTab('work')}
         >
           실무 프로젝트
         </h3>
@@ -69,7 +82,7 @@ export default function ProjectsSection({ id, data }: Props) {
           className={`${baseStyle} ${underlineBase} ${
             selectedTab === 'personal' ? activeStyle : inactiveStyle
           }`}
-          onClick={() => setSelectedTab('personal')}
+          onClick={() => changeTab('personal')}
         >
           개인 프로젝트
         </h3>
@@ -78,7 +91,7 @@ export default function ProjectsSection({ id, data }: Props) {
         {currentProjectList.map((item) => (
           <Link
             key={item.projectId}
-            href={`/projects/${item.projectId}?tab=${selectedTab}`}
+            href={`/projects/${item.projectId}`}
             className='flex flex-col cursor-pointer
           hover:bg-amber-50 transition
           dark:hover:bg-gray-700'
