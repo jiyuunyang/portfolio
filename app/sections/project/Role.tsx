@@ -1,4 +1,4 @@
-import { ProjectDetail } from '@/lib/services/projectServerService';
+import { ProjectDetail } from '@/lib/services/projectService';
 
 type Props = {
   id: string;
