@@ -1,9 +1,8 @@
 'use client';
 
 import { Menu, XIcon } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 
 const HOME_PAGE: { name: string; id: string }[] = [
@@ -25,11 +24,34 @@ const PROJECT_PAGE: { name: string; id: string }[] = [
 
 export default function Navigation() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const router = useRouter();
   const pathname = usePathname();
   const menuList = pathname.includes('projects') ? PROJECT_PAGE : HOME_PAGE;
   const ids = menuList.map((item) => item.id);
   const activeSection = useScrollSpy(ids);
-  // TODO 1 : 프로젝트 이름 #summary 의 경우 불러오는 데이터에 따라 이름이 달라져야함
+
+  // 스크롤 저장
+  useEffect(() => {
+    const saveScroll = () => {
+      // 홈이 아니면 저장 안 함
+      if (pathname !== '/') return;
+
+      sessionStorage.setItem('homeScrollY', String(window.scrollY));
+    };
+
+    window.addEventListener('scroll', saveScroll);
+    return () => window.removeEventListener('scroll', saveScroll);
+  }, [pathname]);
+
+  // 스크롤 복원
+  useEffect(() => {
+    if (pathname !== '/') return;
+
+    const y = sessionStorage.getItem('homeScrollY');
+    if (y) {
+      window.scrollTo(0, Number(y));
+    }
+  }, [pathname]);
 
   return (
     <>
@@ -48,15 +70,17 @@ export default function Navigation() {
         {menuList.map((item) => {
           const isActive = activeSection == item.id;
           return (
-            <Link
+            <button
               key={item.id}
-              href={item.id}
+              onClick={() => {
+                router.push(item.id);
+              }}
               className={`p-3 hover:opacity-70 ${
                 isActive ? 'font-bold' : 'opacity-80'
               }`}
             >
               {item.name}
-            </Link>
+            </button>
           );
         })}
       </nav>
@@ -107,16 +131,16 @@ export default function Navigation() {
         {menuList.map((item) => {
           const isActive = activeSection == item.id;
           return (
-            <Link
+            <button
               key={item.id}
-              href={item.id}
-              className={`block px-2 py-4 ${isActive ? 'font-bold' : ''}`}
               onClick={() => {
+                router.push(item.id);
                 setIsDropdownOpen(false);
               }}
+              className={`block px-2 py-4 ${isActive ? 'font-bold' : ''}`}
             >
               {item.name}
-            </Link>
+            </button>
           );
         })}
       </div>
