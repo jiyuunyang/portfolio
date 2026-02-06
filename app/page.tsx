@@ -8,6 +8,7 @@ import Skills from './sections/home/Skills';
 import { getExperience } from '@/lib/services/experienceService';
 
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'no-store'
 
 export default async function Home() {
   const profile = await getProfile();
