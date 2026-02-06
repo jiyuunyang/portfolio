@@ -11,6 +11,8 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+export const revalidate = 60;
+
 export default async function ProjectDetail({ params }: PageProps) {
   const { slug } = await params;
   const projectDetail = await getProjectDetail(slug);
