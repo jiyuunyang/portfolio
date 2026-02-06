@@ -21,6 +21,8 @@ export const metadata: Metadata = {
   description: '개발자로서의 비전, 기술 스택, 프로젝트 및 이력이 담겼습니다.',
 };
 
+export const revalidate = 60;
+
 export default async function RootLayout({
   children,
 }: Readonly<{
