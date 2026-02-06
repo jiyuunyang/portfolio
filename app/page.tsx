@@ -7,7 +7,7 @@ import ProjectsSection from './sections/home/ProjectsSection';
 import Skills from './sections/home/Skills';
 import { getExperience } from '@/lib/services/experienceService';
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   const profile = await getProfile();
