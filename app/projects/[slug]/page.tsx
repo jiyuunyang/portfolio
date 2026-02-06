@@ -12,6 +12,7 @@ interface PageProps {
 }
 
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'no-store'
 
 export default async function ProjectDetail({ params }: PageProps) {
   const { slug } = await params;
