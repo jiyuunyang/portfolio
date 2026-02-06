@@ -22,6 +22,7 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'no-store'
 
 export default async function RootLayout({
   children,
