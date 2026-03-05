@@ -9,7 +9,7 @@
 ### 사용 스택
 
 - Front: Next.js, Typescript
-- Data: Firestore database
+- DB: Firestore database
 
 ### 추후 부가할 내용
 
