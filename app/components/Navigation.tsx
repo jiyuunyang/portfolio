@@ -28,6 +28,9 @@ export default function Navigation() {
   const router = useRouter();
   const pathname = usePathname();
   const { projects } = useProjectsData();
+
+  // 관리자 페이지에서는 사이트 내비게이션을 숨김
+  const isAdminRoute = pathname.startsWith('/admin');
   const menuList = useMemo(() => {
     if (!projects || projects.length === 0) return null;
 
@@ -83,6 +86,8 @@ export default function Navigation() {
       window.scrollTo(0, Number(y));
     }
   }, [pathname]);
+
+  if (isAdminRoute) return null;
 
   return (
     <>
