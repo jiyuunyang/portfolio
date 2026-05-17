@@ -22,21 +22,22 @@ export default async function ProjectDetail({ params }: PageProps) {
         {projectDetail && <Summary id='summary' data={projectDetail} />}
         <div className='tb:flex tb:flex-col tb:justify-end'>
           {projectDetail && <Outline id='outline' data={projectDetail} />}
-          {projectDetail?.roles && (
+          {projectDetail?.roles && projectDetail.roles.length > 0 && (
             <Role id='role' data={projectDetail.roles} />
           )}
         </div>
       </div>
-      {projectDetail?.features && (
+      {projectDetail?.features && projectDetail.features.length > 0 && (
         <FeaturesSection id='features' data={projectDetail.features} />
       )}
-      {projectDetail?.technicalChallenge && (
-        <TechnicalChallenge
-          id='technical-challenge'
-          data={projectDetail.technicalChallenge}
-        />
-      )}
-      {projectDetail?.result && (
+      {projectDetail?.technicalChallenge &&
+        projectDetail.technicalChallenge.length > 0 && (
+          <TechnicalChallenge
+            id='technical-challenge'
+            data={projectDetail.technicalChallenge}
+          />
+        )}
+      {projectDetail?.result && projectDetail.result.length > 0 && (
         <Result id='result' data={projectDetail.result} />
       )}
       <BackToMain />
